@@ -12,6 +12,7 @@ class CountrySearchListWidget extends StatefulWidget {
   final bool autoFocus;
   final bool? showFlags;
   final bool? useEmoji;
+  final TextStyle? searchTextStyle;
 
   CountrySearchListWidget(
     this.countries,
@@ -21,6 +22,7 @@ class CountrySearchListWidget extends StatefulWidget {
     this.showFlags,
     this.useEmoji,
     this.autoFocus = false,
+    this.searchTextStyle,
   });
 
   @override
@@ -67,6 +69,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
             decoration: getSearchBoxDecoration(),
             controller: _searchController,
             autofocus: widget.autoFocus,
+            style: widget.searchTextStyle,
             onChanged: (value) {
               final String value = _searchController.text.trim();
               return setState(
@@ -154,7 +157,7 @@ class DirectionalCountryListTile extends StatelessWidget {
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           '${Utils.getCountryName(country, locale)}',
-          textDirection: Directionality.of(context),
+          // textDirection: Directionality.of(context),
           textAlign: TextAlign.start,
         ),
       ),

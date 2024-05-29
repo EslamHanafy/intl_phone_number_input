@@ -17,6 +17,7 @@ class SelectorButton extends StatelessWidget {
   final String? locale;
   final bool isEnabled;
   final bool isScrollControlled;
+  final TextStyle? searchTextStyle;
 
   final ValueChanged<Country?> onCountryChanged;
 
@@ -32,6 +33,7 @@ class SelectorButton extends StatelessWidget {
     required this.onCountryChanged,
     required this.isEnabled,
     required this.isScrollControlled,
+    this.searchTextStyle,
   }) : super(key: key);
 
   @override
@@ -123,18 +125,16 @@ class SelectorButton extends StatelessWidget {
       context: inheritedContext,
       barrierDismissible: true,
       builder: (BuildContext context) => AlertDialog(
-        content: Directionality(
-          textDirection: Directionality.of(inheritedContext),
-          child: Container(
-            width: double.maxFinite,
-            child: CountrySearchListWidget(
-              countries,
-              locale,
-              searchBoxDecoration: searchBoxDecoration,
-              showFlags: selectorConfig.showFlags,
-              useEmoji: selectorConfig.useEmoji,
-              autoFocus: autoFocusSearchField,
-            ),
+        content: Container(
+          width: double.maxFinite,
+          child: CountrySearchListWidget(
+            countries,
+            locale,
+            searchBoxDecoration: searchBoxDecoration,
+            showFlags: selectorConfig.showFlags,
+            useEmoji: selectorConfig.useEmoji,
+            autoFocus: autoFocusSearchField,
+            searchTextStyle: searchTextStyle,
           ),
         ),
       ),
@@ -163,27 +163,25 @@ class SelectorButton extends StatelessWidget {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: DraggableScrollableSheet(
               builder: (BuildContext context, ScrollController controller) {
-                return Directionality(
-                  textDirection: Directionality.of(inheritedContext),
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      color: Theme.of(context).canvasColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                        ),
+                return Container(
+                  decoration: ShapeDecoration(
+                    color: Theme.of(context).canvasColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
                       ),
                     ),
-                    child: CountrySearchListWidget(
-                      countries,
-                      locale,
-                      searchBoxDecoration: searchBoxDecoration,
-                      scrollController: controller,
-                      showFlags: selectorConfig.showFlags,
-                      useEmoji: selectorConfig.useEmoji,
-                      autoFocus: autoFocusSearchField,
-                    ),
+                  ),
+                  child: CountrySearchListWidget(
+                    countries,
+                    locale,
+                    searchBoxDecoration: searchBoxDecoration,
+                    scrollController: controller,
+                    showFlags: selectorConfig.showFlags,
+                    useEmoji: selectorConfig.useEmoji,
+                    autoFocus: autoFocusSearchField,
+                    searchTextStyle: searchTextStyle,
                   ),
                 );
               },
